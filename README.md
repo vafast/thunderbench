@@ -1,4 +1,4 @@
-# ThunderBench Core
+# ThunderBench
 
 <div align="center">
 
@@ -113,7 +113,7 @@ ThunderBench 使用分层配置结构，支持复杂的测试场景：
       http: {                        // HTTP 配置
         baseUrl: "http://localhost:3000",  // 基础 URL
         headers: {                    // 全局请求头
-          "User-Agent": "thunderbench/1.0",
+          "User-Agent": "thunderbench/1.0.0",
           "Authorization": "Bearer token"
         }
       },
@@ -296,7 +296,7 @@ JSON 报告采用 K6 兼容的格式，便于集成到 CI/CD 流程和数据分�
     "endTime": "2024-01-15T10:30:30.000Z",
     "duration": 30000,
     "generatedAt": "2024-01-15T10:30:30.000Z",
-    "version": "ThunderBench v1.0.0",
+    "version": "ThunderBench v1.0.3",
     "tool": "wrk",
     "config": {
       "totalGroups": 2,
@@ -664,8 +664,8 @@ function generateReport(
 
 ```bash
 # 克隆仓库
-git clone https://github.com/thunderbench/thunderbench.git
-cd thunderbench
+git clone https://github.com/thunderbench/thunderbench-core.git
+cd thunderbench-core
 
 # 安装依赖
 bun install
@@ -686,7 +686,7 @@ bun run type-check
 ### 项目结构
 
 ```
-thunderbench/
+thunderbench-core/
 ├── src/                    # 源代码
 │   ├── core/              # 核心引擎
 │   ├── types/             # 类型定义
@@ -700,32 +700,33 @@ thunderbench/
 ## 📊 性能基准
 
 ### 测试环境
-- **CPU**: Intel i7-12700K / AMD Ryzen 7 5800X
-- **内存**: 32GB DDR4
-- **网络**: 千兆以太网
 - **目标**: Nginx 静态文件服务
 
 ### 测试结果
 
 > ⚠️ **重要声明**: 以下数据为**估算数据**，并非权威的基准测试结果。实际性能表现取决于测试环境、目标系统、网络条件、配置参数等多种因素。强烈建议用户在实际使用中进行自己的基准测试以获得准确数据。
 
-| 工具 | 并发数 | 请求/秒 | 平均延迟 | 95% 延迟 | 99% 延迟 |
-|------|--------|----------|----------|-----------|-----------|
-| **ThunderBench** | 1000 | ~120,000 | ~2.5ms | ~5.0ms | ~10.0ms |
-| wrk | 1000 | ~125,000 | ~2.0ms | ~4.5ms | ~8.0ms |
-| k6 | 1000 | ~60,000 | ~5.0ms | ~12.0ms | ~20.0ms |
-| JMeter | 1000 | ~35,000 | ~15.0ms | ~40.0ms | ~80.0ms |
-| Artillery | 1000 | ~25,000 | ~15.0ms | ~35.0ms | ~60.0ms |
+| 排名 | 工具 | 最大 RPS（估算） | 性能评级 |
+|------|------|------------------|----------|
+| 🥇 **1️⃣** | **wrk** | 🔥 **200,000+** | 🏆 极致性能 |
+| 🥈 **2️⃣** | **k6** | **50,000 – 80,000** | 🥇 优秀性能 |
+| 🥉 **3️⃣** | **Gatling** | **30,000 – 50,000** | 🥈 良好性能 |
+| **4️⃣** | **Artillery / wrk2** | **25,000 – 40,000** | 🥈 良好性能 |
+| **5️⃣** | **Locust** | **15,000 – 25,000** | 🥉 一般性能 |
+| **6️⃣** | **JMeter** | **8,000 – 15,000** | 🥉 一般性能 |
+| **🌟** | **ThunderBench** | **≈ wrk 性能** | 🏆 极致性能 |
 
 ### 性能说明
 
-> 📊 **性能数据来源说明**: 以下数据基于一般性认知和工具特性分析，仅供参考。不同版本、不同配置、不同环境下的实际性能可能有显著差异。
+> 📊 **性能数据来源说明**: 以下排名基于工具特性和一般性认知，仅供参考。实际性能表现取决于测试环境、目标系统、网络条件、配置参数等多种因素。
 
-- **ThunderBench**: 基于 WRK 引擎，理论上性能应接近原生 WRK，但增加了配置验证和报告生成功能
-- **wrk**: C 语言实现，通常被认为是性能测试工具的性能标杆
-- **k6**: Go 语言实现，性能表现因版本和配置而异
-- **JMeter**: Java 实现，性能受 JVM 配置和测试计划复杂度影响较大
-- **Artillery**: Node.js 实现，性能受 Node.js 版本和配置影响
+- **ThunderBench**: 基于 WRK 引擎，性能与原生 WRK 基本一致，同时提供丰富的配置验证和报告生成功能
+- **wrk**: C 语言实现，性能测试工具的性能标杆，适合追求极致性能的场景
+- **k6**: Go 语言实现，现代工具，性能表现优秀，支持复杂的测试逻辑
+- **Gatling**: Scala 实现，企业级工具，性能表现良好，支持复杂的测试场景
+- **Artillery**: Node.js 实现，简单易用，适合快速性能测试
+- **Locust**: Python 实现，支持复杂的用户行为模拟，性能表现中等
+- **JMeter**: Java 实现，功能全面，但性能受 JVM 配置影响较大
 
 ### 权威基准测试资源
 
@@ -803,9 +804,9 @@ thunderbench --config benchmark-config.ts --verbose
 ## 🔗 相关链接
 
 - **官方网站**: [https://thunderbench.dev](https://thunderbench.dev)
-- **GitHub 仓库**: [https://github.com/thunderbench/thunderbench](https://github.com/thunderbench/thunderbench)
-- **问题反馈**: [https://github.com/thunderbench/thunderbench/issues](https://github.com/thunderbench/thunderbench/issues)
-- **讨论社区**: [https://github.com/thunderbench/thunderbench/discussions](https://github.com/thunderbench/thunderbench/discussions)
+- **GitHub 仓库**: [https://github.com/thunderbench/thunderbench-core](https://github.com/thunderbench/thunderbench-core)
+- **问题反馈**: [https://github.com/thunderbench/thunderbench-core/issues](https://github.com/thunderbench/thunderbench-core/issues)
+- **讨论社区**: [https://github.com/thunderbench/thunderbench-core/discussions](https://github.com/thunderbench/thunderbench-core/discussions)
 - **CLI 工具**: [https://github.com/thunderbench/thunderbench-cli](https://github.com/thunderbench/thunderbench-cli)
 
 ## 🙏 致谢
