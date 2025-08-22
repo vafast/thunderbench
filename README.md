@@ -592,65 +592,54 @@ function generateReport(
 
 ## ⚡ 竞品对比
 
-### 性能对比
+### 📊 2025 开源负载测试工具全面横评表
 
-| 工具 | 并发能力 | 内存占用 | 启动速度 | 资源效率 |
-|------|----------|----------|----------|----------|
-| **ThunderBench** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| wrk | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| k6 | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ |
-| JMeter | ⭐⭐⭐ | ⭐⭐ | ⭐⭐ | ⭐⭐ |
-| Artillery | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
+| 工具 | 编程语言 | 脚本方式 | 支持协议 | 分布式支持 | 单节点最大 RPS（估算） | 集群最大 RPS（参考） | HTTP/3 & QUIC | gRPC | Web UI | 实时监控 | 报告能力 | CI/CD 友好 | 学习曲线 | 社区活跃度 | 典型应用场景 | 官网/源码 |
+|------|--------|----------|-----------|-------------|------------------------|----------------------|---------------|--------|---------|------------|------------|--------------|------------|----------------|------------------|-------------|
+| **ThunderBench** | TypeScript/JS | TS/JS 脚本 | HTTP/1.1, HTTP/2 | ❌（需手动部署多实例） | 🔥 **150k–200k+** | ❌（无原生支持） | ❌ | ❌ | ❌ | ✅（RxJS 流） | ✅（JSON/MD） | ✅✅✅（Node.js 生态） | 低（TS 友好） | ⭐⭐⭐⭐⭐ | Node.js 项目、高性能 API 测试 | [github.com/thunderbench/thunderbench-core](https://github.com/thunderbench/thunderbench-core) |
+| **wrk** | C + Lua | CLI + Lua 脚本 | HTTP/1.1<br>（HTTP/2 via patch） | ❌（需手动部署多实例） | 🔥 **150k–200k+** | ❌（无原生支持） | ❌ | ❌ | ❌ | ⚠️（终端输出） | ⚠️（基础文本） | ✅（轻量易集成） | 中等 | ⭐⭐⭐⭐☆ | 极致吞吐压测、性能基线测试 | [github.com/wg/wrk](https://github.com/wg/wrk) |
+| **k6** | JavaScript/TypeScript | JS/TS 脚本 | HTTP/1.1, HTTP/2<br>✅ HTTP/3 (QUIC)<br>gRPC (实验) | ✅（k6-operator on K8s） | 50k–80k | ✅ **500k+** | ✅ | ✅（实验） | ✅（CLI Dashboard） | ✅（终端 + Prometheus） | ✅（JSON/HTML） | ✅✅✅（DevOps 首选） | 低–中 | ⭐⭐⭐⭐⭐ | 云原生、CI/CD、高并发 API 测试 | [k6.io](https://k6.io) |
+| **Gatling** | Scala（DSL） | Scala 代码 | HTTP/1.1, HTTP/2<br>WebSockets, MQTT, SSE | ✅（自建集群） | 30k–50k | ✅ 100k+ | ❌ | ❌ | ✅（Web 控制台） | ✅（实时图表） | ✅✅✅（精美 HTML 报告） | ✅（支持 CLI） | 中–高 | ⭐⭐⭐⭐☆ | 高性能 Web 测试、精准性能建模 | [gatling.io](https://gatling.io) |
+| **Locust** | Python | Python 代码 | 任意（自定义） | ✅（Master-Worker） | 15k–25k | ✅ **200k+** | ⚠️（需集成 `http3` 库） | ✅（通过 gRPC 库） | ✅✅✅（实时 Web UI） | ✅✅✅（实时图表 + 指标） | ✅（Web + CSV） | ✅✅（Python 生态无缝） | 低（Python 友好） | ⭐⭐⭐⭐⭐ | 复杂用户行为、动态逻辑、Python 团队 | [locust.io](https://locust.io) |
+| **Apache JMeter** | Java | GUI / XML / 模块化 | HTTP, HTTPS, JDBC, FTP, TCP, WebSocket, JMS, SMTP, gRPC (插件) | ✅（Master-Slave） | 8k–15k | ✅ 100k+ | ❌（需插件，不成熟） | ✅（插件） | ✅（Swing GUI） | ✅（监听器 + 插件） | ✅✅（丰富插件报告） | ✅（支持 CLI 模式） | 中等 | ⭐⭐⭐⭐⭐ | 企业级复杂流程、非开发人员使用 | [jmeter.apache.org](https://jmeter.apache.org) |
+| **Artillery** | YAML + JS | YAML 配置 + JS 脚本 | HTTP/1.1, HTTP/2<br>WebSockets, Socket.IO<br>gRPC (实验) | ✅（Docker/K8s 部署） | 25k–40k | ✅ 150k+ | ⚠️（实验性） | ✅（实验） | ✅（CLI Dashboard） | ✅（终端 + Prometheus） | ✅（JSON/HTML） | ✅✅（Node.js 友好） | 低（YAML 简洁） | ⭐⭐⭐⭐ | 微服务、Node.js 项目、快速上手 | [artillery.io](https://artillery.io) |
+| **Tsung** | Erlang | XML 配置文件 | HTTP, WebDAV, SOAP, PostgreSQL, MySQL, XMPP, LDAP | ✅（原生分布式） | 10k–20k | ✅ 100k+ | ❌ | ❌ | ✅（Web 报告） | ✅（实时图表） | ✅（图表 + 日志） | ⚠️（配置复杂） | 高（Erlang 小众） | ⭐⭐⭐ | 长连接、IM、高并发连接测试 | [tsung.fr](http://tsung.fr) |
 
-### 功能特性对比
+### 🔑 关键维度说明
 
-| 特性 | ThunderBench | wrk | k6 | JMeter | Artillery |
-|------|--------------|-----|----|--------|-----------|
-| **编程接口** | ✅ TypeScript/JS | ❌ C | ✅ JavaScript | ✅ Java | ✅ JavaScript |
-| **类型安全** | ✅ 完整类型 | ❌ 无 | ⚠️ 部分 | ⚠️ 部分 | ⚠️ 部分 |
-| **实时监控** | ✅ RxJS 流 | ❌ 无 | ✅ 内置 | ⚠️ 有限 | ⚠️ 有限 |
-| **配置验证** | ✅ 完整验证 | ❌ 无 | ⚠️ 运行时 | ⚠️ 有限 | ⚠️ 有限 |
-| **跨平台** | ✅ 内置二进制 | ⚠️ 需编译 | ✅ 跨平台 | ✅ 跨平台 | ✅ 跨平台 |
-| **报告生成** | ✅ 多格式 | ❌ 无 | ✅ 内置 | ✅ 内置 | ✅ 内置 |
-| **报告格式** | ✅ JSON/MD | ❌ 无 | ✅ JSON/HTML | ✅ XML/HTML | ✅ JSON/HTML |
-| **权重分配** | ✅ 灵活配置 | ❌ 无 | ✅ 支持 | ✅ 支持 | ✅ 支持 |
+| 维度 | 说明 |
+|------|------|
+| **单节点最大 RPS** | 在高端服务器（16核+32GB RAM）对简单 GET 请求的极限吞吐能力（理想环境） |
+| **HTTP/3 & QUIC** | 是否原生支持新一代基于 UDP 的 HTTP 协议，对 CDN、边缘服务测试至关重要 |
+| **gRPC 支持** | 是否支持现代微服务通信协议 gRPC（基于 HTTP/2） |
+| **Web UI** | 是否提供图形化控制台用于配置或监控 |
+| **实时监控** | 是否支持压测过程中实时查看 TPS、响应时间、错误率等指标 |
+| **报告能力** | 是否生成结构化或可视化报告（HTML/JSON/图表） |
+| **CI/CD 友好** | 是否支持无头模式、脚本化、与 Jenkins/GitLab CI 集成 |
+| **学习曲线** | 入门难度：低（<1天）、中（1–3天）、高（>3天） |
+| **社区活跃度** | GitHub Stars、Issue 响应、文档质量、更新频率（⭐越多越活跃） |
 
-### 使用场景对比
+### 🏆 2025 推荐场景速查表
 
-#### ThunderBench 优势
-- **开发友好**：完整的 TypeScript 支持，开发体验优秀
-- **高性能**：基于 WRK 引擎，性能表现卓越
-- **易集成**：编程 API 设计，易于集成到现有系统
-- **实时监控**：基于 RxJS 的响应式数据流
-- **配置灵活**：支持复杂的测试场景和权重分配
+| 你的需求 | 推荐工具 |
+|--------|----------|
+| 追求**极限 RPS** 和**低资源消耗** | ✅ **wrk** 或 **ThunderBench** |
+| **Node.js 项目 + 高性能 + 类型安全** | ✅ **ThunderBench** |
+| **云原生 + CI/CD + 高并发** | ✅ **k6** |
+| **复杂用户行为 + Python 技术栈** | ✅ **Locust** |
+| **精美报告 + 精准建模** | ✅ **Gatling** |
+| **企业级复杂流程 + 图形化操作** | ✅ **JMeter** |
+| **微服务 + YAML 配置 + 快速上手** | ✅ **Artillery** |
+| **长连接 + IM + 高并发连接数** | ✅ **Tsung** |
+| **HTTP/3 / QUIC 协议测试** | ✅ **k6** 或 **自定义 wrk 补丁版** |
 
-#### wrk 优势
-- **极致性能**：C 语言实现，性能表现最佳
-- **资源占用低**：内存和 CPU 占用极低
-- **稳定可靠**：经过大量生产环境验证
+### 💡 总结建议（2025）
 
-#### k6 优势
-- **脚本能力**：支持复杂的测试逻辑和场景
-- **云原生**：支持云服务集成
-- **生态系统**：丰富的插件和扩展
-
-#### JMeter 优势
-- **图形界面**：易于使用的 GUI 界面
-- **功能全面**：支持多种协议和测试类型
-- **企业级**：适合大型团队使用
-
-#### Artillery 优势
-- **简单易用**：配置简单，上手容易
-- **云集成**：与云服务集成良好
-- **成本低**：开源免费
-
-### 选择建议
-
-- **选择 ThunderBench**：需要编程接口、类型安全、高性能的 Node.js 项目
-- **选择 wrk**：追求极致性能，不需要复杂配置的场景
-- **选择 k6**：需要复杂测试逻辑和云集成的场景
-- **选择 JMeter**：团队中有 Java 开发者，需要图形界面的场景
-- **选择 Artillery**：简单易用，成本敏感的场景
+- **首选推荐（综合性能 + 现代化）**：**ThunderBench**、**k6** 和 **Locust**
+- **性能基准测试**：**wrk** 和 **ThunderBench** 是"黄金标准"
+- **传统企业级测试**：**JMeter** 依然不可替代
+- **未来趋势**：支持 **HTTP/3、gRPC、K8s 原生部署** 的工具（如 k6）将成为主流
+- **Node.js 生态**：**ThunderBench** 为 Node.js 开发者提供了最佳的性能测试解决方案
 
 ## 🛠️ 开发指南
 
