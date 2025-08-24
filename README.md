@@ -2,10 +2,10 @@
 
 <div align="center">
 
-![ThunderBench Logo](https://img.shields.io/badge/ThunderBench-Core-blue?style=for-the-badge&logo=lightning)
-![Version](https://img.shields.io/npm/v/thunderbench-core?style=flat-square)
-![License](https://img.shields.io/npm/l/thunderbench-core?style=flat-square)
-![Node.js](https://img.shields.io/node/v/thunderbench-core?style=flat-square)
+![ThunderBench Logo](https://img.shields.io/badge/ThunderBench-blue?style=for-the-badge&logo=lightning)
+![Version](https://img.shields.io/npm/v/thunderbench?style=flat-square)
+![License](https://img.shields.io/npm/l/thunderbench?style=flat-square)
+![Node.js](https://img.shields.io/node/v/thunderbench?style=flat-square)
 
 **高性能 API 性能测试工具核心引擎**
 
@@ -32,22 +32,22 @@
 
 ```bash
 # 使用 npm
-npm install thunderbench-core
+npm install thunderbench
 
 # 使用 yarn
-yarn add thunderbench-core
+yarn add thunderbench
 
 # 使用 bun
-bun add thunderbench-core
+bun add thunderbench
 
 # 使用 pnpm
-pnpm add thunderbench-core
+pnpm add thunderbench
 ```
 
 ### 基本使用
 
 ```javascript
-import { runBenchmark, validateConfig } from 'thunderbench-core';
+import { runBenchmark, validateConfig } from 'thunderbench';
 
 // 定义测试配置
 const config = {
@@ -215,7 +215,7 @@ const dynamicConfig = {
 #### 基础用法
 
 ```javascript
-import { ThunderBench } from 'thunderbench-core';
+import { ThunderBench } from 'thunderbench';
 
 const thunderbench = new ThunderBench(config, {
   outputDir: "./reports",
@@ -596,7 +596,7 @@ function generateReport(
 
 | 工具 | 编程语言 | 脚本方式 | 支持协议 | 分布式支持 | 单节点最大 RPS（估算） | 集群最大 RPS（参考） | HTTP/3 & QUIC | gRPC | Web UI | 实时监控 | 报告能力 | CI/CD 友好 | 学习曲线 | 社区活跃度 | 典型应用场景 | 官网/源码 |
 |------|--------|----------|-----------|-------------|------------------------|----------------------|---------------|--------|---------|------------|------------|--------------|------------|----------------|------------------|-------------|
-| **ThunderBench** | TypeScript/JS | CLI + TS/JS 脚本 | HTTP/1.1, HTTP/2 | ❌（需手动部署多实例） | 🔥 **150k–200k+** | ❌（无原生支持） | ❌ | ❌ | ❌ | ✅（RxJS 流） | ✅（JSON/MD） | ✅✅✅（Node.js 生态） | 低（TS 友好） | ⭐⭐⭐⭐⭐ | Node.js 项目、高性能 API 测试 | [github.com/thunderbench/thunderbench-core](https://github.com/thunderbench/thunderbench-core) |
+| **ThunderBench** | TypeScript/JS | CLI + TS/JS 脚本 | HTTP/1.1, HTTP/2 | ❌（需手动部署多实例） | 🔥 **150k–200k+** | ❌（无原生支持） | ❌ | ❌ | ❌ | ✅（RxJS 流） | ✅（JSON/MD） | ✅✅✅（Node.js 生态） | 低（TS 友好） | ⭐⭐⭐⭐⭐ | Node.js 项目、高性能 API 测试 | [github.com/thunderbench/thunderbench](https://github.com/thunderbench/thunderbench) |
 | **wrk** | C + Lua | CLI + Lua 脚本 | HTTP/1.1<br>（HTTP/2 via patch） | ❌（需手动部署多实例） | 🔥 **150k–200k+** | ❌（无原生支持） | ❌ | ❌ | ❌ | ⚠️（终端输出） | ⚠️（基础文本） | ✅（轻量易集成） | 中等 | ⭐⭐⭐⭐☆ | 极致吞吐压测、性能基线测试 | [github.com/wg/wrk](https://github.com/wg/wrk) |
 | **k6** | JavaScript/TypeScript | JS/TS 脚本 | HTTP/1.1, HTTP/2<br>✅ HTTP/3 (QUIC)<br>gRPC (实验) | ✅（k6-operator on K8s） | 50k–80k | ✅ **500k+** | ✅ | ✅（实验） | ✅（CLI Dashboard） | ✅（终端 + Prometheus） | ✅（JSON/HTML） | ✅✅✅（DevOps 首选） | 低–中 | ⭐⭐⭐⭐⭐ | 云原生、CI/CD、高并发 API 测试 | [k6.io](https://k6.io) |
 | **Gatling** | Scala（DSL） | Scala 代码 | HTTP/1.1, HTTP/2<br>WebSockets, MQTT, SSE | ✅（自建集群） | 30k–50k | ✅ 100k+ | ❌ | ❌ | ✅（Web 控制台） | ✅（实时图表） | ✅✅✅（精美 HTML 报告） | ✅（支持 CLI） | 中–高 | ⭐⭐⭐⭐☆ | 高性能 Web 测试、精准性能建模 | [gatling.io](https://gatling.io) |
@@ -653,8 +653,8 @@ function generateReport(
 
 ```bash
 # 克隆仓库
-git clone https://github.com/thunderbench/thunderbench-core.git
-cd thunderbench-core
+git clone https://github.com/thunderbench/thunderbench.git
+cd thunderbench
 
 # 安装依赖
 bun install
@@ -675,7 +675,7 @@ bun run type-check
 ### 项目结构
 
 ```
-thunderbench-core/
+thunderbench/
 ├── src/                    # 源代码
 │   ├── core/              # 核心引擎
 │   ├── types/             # 类型定义
@@ -793,9 +793,9 @@ thunderbench --config benchmark-config.ts --verbose
 ## 🔗 相关链接
 
 - **官方网站**: [https://thunderbench.dev](https://thunderbench.dev)
-- **GitHub 仓库**: [https://github.com/thunderbench/thunderbench-core](https://github.com/thunderbench/thunderbench-core)
-- **问题反馈**: [https://github.com/thunderbench/thunderbench-core/issues](https://github.com/thunderbench/thunderbench-core/issues)
-- **讨论社区**: [https://github.com/thunderbench/thunderbench-core/discussions](https://github.com/thunderbench/thunderbench-core/discussions)
+- **GitHub 仓库**: [https://github.com/thunderbench/thunderbench](https://github.com/thunderbench/thunderbench)
+- **问题反馈**: [https://github.com/thunderbench/thunderbench/issues](https://github.com/thunderbench/thunderbench/issues)
+- **讨论社区**: [https://github.com/thunderbench/thunderbench/discussions](https://github.com/thunderbench/thunderbench/discussions)
 - **CLI 工具**: [https://github.com/thunderbench/thunderbench-cli](https://github.com/thunderbench/thunderbench-cli)
 
 ## 🙏 致谢
