@@ -1,6 +1,6 @@
 {
   "name": "thunderbench",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "ThunderBench - 高性能API性能测试工具核心引擎",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,7 +24,8 @@
     "build": "bun build src/index.ts --outdir ./dist --target node && tsc --project tsconfig.build.json",
     "dev": "bun --watch src/index.ts",
     "test": "vitest",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "release": "bumpp"
   },
   "keywords": [
     "performance",
@@ -59,6 +60,7 @@
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.10.0",
+    "bumpp": "^10.2.3",
     "bun-types": "latest",
     "typescript": "^5.3.0",
     "vitest": "^1.0.0"
