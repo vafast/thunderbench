@@ -23,9 +23,9 @@
   "scripts": {
     "build": "bun build src/index.ts --outdir ./dist --target node && tsc --project tsconfig.build.json",
     "dev": "bun --watch src/index.ts",
-    "test": "vitest",
+    "test": "vitest --run",
     "prepublishOnly": "npm run build",
-    "release": "bun run build && bun run test && bumpp && bun publish"
+    "release": "bumpp"
   },
   "keywords": [
     "performance",
