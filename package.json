@@ -1,6 +1,6 @@
 {
   "name": "thunderbench",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "ThunderBench - 高性能API性能测试工具核心引擎",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
