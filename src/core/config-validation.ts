@@ -61,7 +61,7 @@ const validateGroup = (group: TestGroupConfig): void => {
   }
 
   // 验证测试策略（duration）
-  if (!group.duration) {
+  if (group.duration === undefined || group.duration === null) {
     throw new Error(`测试组 "${group.name}" 必须指定 duration`);
   }
 

@@ -155,6 +155,7 @@ describe("配置验证扩展测试", () => {
   describe("HTTP配置验证", () => {
     it("当HTTP timeout为负数时应该抛出错误", () => {
       const config: BenchmarkConfig = {
+        name: "test-benchmark",
         groups: [
           {
             name: "test-group",
@@ -163,8 +164,9 @@ describe("配置验证扩展测试", () => {
               timeout: -1000, // 负数超时
             },
             executionMode: "parallel",
-            concurrent: 10,
-            requests: 1000,
+            threads: 4,
+            connections: 10,
+            duration: 30,
             tests: [
               {
                 name: "test",
@@ -183,13 +185,15 @@ describe("配置验证扩展测试", () => {
   describe("权重边缘情况验证", () => {
     it("应该处理权重为0的情况", () => {
       const config: BenchmarkConfig = {
+        name: "test-benchmark",
         groups: [
           {
             name: "test-group",
             http: { baseUrl: "https://api.example.com" },
             executionMode: "parallel",
-            concurrent: 10,
-            requests: 1000,
+            threads: 4,
+            connections: 10,
+            duration: 30,
             tests: [
               {
                 name: "test1",
@@ -211,13 +215,15 @@ describe("配置验证扩展测试", () => {
 
     it("应该处理小数权重", () => {
       const config: BenchmarkConfig = {
+        name: "test-benchmark",
         groups: [
           {
             name: "test-group",
             http: { baseUrl: "https://api.example.com" },
             executionMode: "parallel",
-            concurrent: 10,
-            requests: 1000,
+            threads: 4,
+            connections: 10,
+            duration: 30,
             tests: [
               {
                 name: "test1",
