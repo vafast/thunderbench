@@ -8,6 +8,26 @@ export type { BenchmarkConfig, TestGroupConfig, ApiTestConfig } from "./types";
 // 重新导出核心类
 export { TestEngine } from "./core/wrk-test-engine";
 
+// 服务器管理
+export { ServerManager, ServerInstance } from "./core/server-manager";
+export type { ServerConfig, ServerStatus, ServerEvent, HealthCheckResult } from "./core/server-manager";
+
+// 对比测试
+export { ComparisonRunner, runComparison } from "./core/comparison-runner";
+export type {
+  ComparisonResult,
+  ComparisonTestConfig,
+  ComparisonProgress,
+  FrameworkResult,
+  FrameworkSummary,
+  RankingEntry,
+  TestScenario,
+} from "./core/comparison-runner";
+
+// 对比报告
+export { ComparisonReportGenerator, generateComparisonReport } from "./core/comparison-report";
+export type { ReportOptions } from "./core/comparison-report";
+
 // 便捷的编程接口
 export class ThunderBench {
   private engine: TestEngine;

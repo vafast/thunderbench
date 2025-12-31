@@ -25,6 +25,7 @@
 - **🌐 跨平台**：内置跨平台 WRK 二进制文件，开箱即用
 - **📈 丰富报告**：支持 JSON、Markdown 等多种报告格式，提供详细的性能分析
 - **🔄 流式处理**：基于 RxJS 的响应式数据流处理
+- **🏆 框架对比**：内置框架横向对比测试，自动启停服务器、生成排名报告
 
 ## 🚀 快速开始
 
@@ -259,23 +260,113 @@ try {
 }
 ```
 
-### 4. 命令行使用
+### 4. 框架对比测试 🆕
+
+ThunderBench 支持自动化框架性能对比测试，自动管理服务器生命周期：
+
+```typescript
+import {
+  runComparison,
+  generateComparisonReport,
+  ServerConfig,
+  ComparisonTestConfig,
+} from 'thunderbench';
+
+// 定义要对比的框架
+const servers: ServerConfig[] = [
+  {
+    name: "Vafast",
+    command: "bun",
+    args: ["run", "servers/vafast-server.ts"],
+    port: 3001,
+    healthCheckPath: "/health",
+    warmupRequests: 100,
+  },
+  {
+    name: "Express",
+    command: "node",
+    args: ["servers/express-server.js"],
+    port: 3002,
+    healthCheckPath: "/health",
+    warmupRequests: 100,
+  },
+  {
+    name: "Hono",
+    command: "bun",
+    args: ["run", "servers/hono-server.ts"],
+    port: 3003,
+    healthCheckPath: "/health",
+    warmupRequests: 100,
+  },
+];
+
+// 定义测试配置
+const testConfig: ComparisonTestConfig = {
+  name: "Web 框架性能对比",
+  threads: 4,
+  connections: 100,
+  duration: 30,
+  scenarios: [
+    { name: "Hello World", method: "GET", path: "/", weight: 40 },
+    { name: "JSON API", method: "GET", path: "/api/users", weight: 30 },
+    { name: "动态路由", method: "GET", path: "/api/users/123", weight: 20 },
+    { name: "POST JSON", method: "POST", path: "/api/users",
+      headers: { "Content-Type": "application/json" },
+      body: { name: "Test" }, weight: 10 },
+  ],
+};
+
+// 运行对比测试（自动启停服务器）
+const result = await runComparison(servers, testConfig);
+
+// 生成对比报告
+await generateComparisonReport(result, {
+  formats: ["markdown", "json"],
+  outputDir: "./comparison-reports",
+});
+```
+
+#### 对比报告示例
+
+```
+🏆 框架性能对比结果
+═══════════════════════════════════════════════════════
+
+排名 | 框架          | RPS           | 延迟(P99)  | 相对性能
+─────────────────────────────────────────────────────────
+🥇 1  | Vafast       |    120,000   |    2.5ms  |   100%
+🥈 2  | Hono         |    115,000   |    2.8ms  |    96%
+🥉 3  | Elysia       |     98,000   |    3.2ms  |    82%
+   4  | Express      |     45,000   |    8.2ms  |    38%
+─────────────────────────────────────────────────────────
+
+📈 Vafast 比 Express 快 2.67x
+```
+
+### 5. 命令行使用
 
 ```bash
 # 安装 CLI 工具
-npm install -g thunderbench
+npm install -g thunderbench-cli
 
-# 运行测试
-thunderbench --config examples/complex-config.ts
+# 运行单个测试
+thunderbench run --config test-config.ts
+
+# 运行框架对比测试
+thunderbench compare --config comparison-config.ts
 
 # 详细输出模式
-thunderbench --config examples/complex-config.ts --verbose
+thunderbench run --config test-config.ts --verbose
 
 # 自定义输出目录
-thunderbench --config examples/complex-config.ts --output ./my-reports
+thunderbench run --config test-config.ts --output ./my-reports
 
 # 配置验证（不执行测试）
-thunderbench --config examples/complex-config.ts --dry-run
+thunderbench run --config test-config.ts --dry-run
+
+# 创建示例配置
+thunderbench create-config --type single
+thunderbench create-config --type comparison
 ```
 
 ## 📊 报告格式
