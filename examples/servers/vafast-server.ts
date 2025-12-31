@@ -129,5 +129,3 @@ const httpServer = createServer(handleRequest);
 httpServer.listen(PORT, () => {
   console.log(`Vafast server running on http://localhost:${PORT}`);
 });
-
-export default { fetch: server.fetch };

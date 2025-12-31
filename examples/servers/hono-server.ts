@@ -61,5 +61,3 @@ serve({
 });
 
 console.log(`Hono server running on http://localhost:${PORT}`);
-
-export default app;
