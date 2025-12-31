@@ -24,8 +24,8 @@ const serversDir = path.join(__dirname, "../servers");
 const servers: ServerConfig[] = [
   {
     name: "Vafast",
-    command: "npx",
-    args: ["tsx", path.join(serversDir, "vafast-server.ts")],
+    command: "bun",
+    args: ["run", path.join(serversDir, "vafast-server.ts")],
     port: 3001,
     healthCheckPath: "/health",
     startupTimeout: 15000,
@@ -33,8 +33,8 @@ const servers: ServerConfig[] = [
   },
   {
     name: "Express",
-    command: "npx",
-    args: ["tsx", path.join(serversDir, "express-server.ts")],
+    command: "bun",
+    args: ["run", path.join(serversDir, "express-server.ts")],
     port: 3002,
     healthCheckPath: "/health",
     startupTimeout: 15000,
@@ -42,14 +42,22 @@ const servers: ServerConfig[] = [
   },
   {
     name: "Hono",
-    command: "npx",
-    args: ["tsx", path.join(serversDir, "hono-server.ts")],
+    command: "bun",
+    args: ["run", path.join(serversDir, "hono-server.ts")],
     port: 3003,
     healthCheckPath: "/health",
     startupTimeout: 15000,
     warmupRequests: 100,
   },
-  // Elysia 仅支持 Bun，跳过 Node.js 测试
+  {
+    name: "Elysia",
+    command: "bun",
+    args: ["run", path.join(serversDir, "elysia-server.ts")],
+    port: 3004,
+    healthCheckPath: "/health",
+    startupTimeout: 15000,
+    warmupRequests: 100,
+  },
 ];
 
 // ============================================================

@@ -1,9 +1,8 @@
 /**
  * Vafast 测试服务器
- * 使用 @vafast/node-server 优化适配器
+ * 使用 Bun 原生 serve（最高性能）
  */
 
-import { serve } from "@vafast/node-server";
 import { Server } from "vafast";
 
 const PORT = parseInt(process.env.PORT || "3001");
@@ -58,7 +57,7 @@ const server = new Server([
         page: parseInt(page),
         limit: parseInt(limit),
         results: users.filter((u) =>
-          u.name.toLowerCase().includes((q || "").toLowerCase())
+          u.name.toLowerCase().includes((q || "").toLowerCase()),
         ),
       };
     },
@@ -74,7 +73,10 @@ const server = new Server([
   },
 ]);
 
-// 使用优化的 Node.js 适配器
-serve({ fetch: server.fetch, port: PORT }, () => {
-  console.log(`Vafast server running on http://localhost:${PORT}`);
-});
+// 使用 Bun 原生 serve（最高性能）
+export default {
+  port: PORT,
+  fetch: server.fetch,
+};
+
+console.log(`Vafast server running on http://localhost:${PORT}`);
