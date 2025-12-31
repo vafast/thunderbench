@@ -613,9 +613,11 @@ export class TestEngine {
 
   /**
    * 为单个接口生成 wrk 脚本
+   * 注意：wrk.format() 只需要相对路径，baseUrl 已经通过命令行传递
    */
   private generateIndividualTestScript(group: any, test: any): string {
-    const fullUrl = this.buildFullUrl(group.http?.baseUrl, test.request.url);
+    // 只使用相对路径，不包含 baseUrl
+    const requestPath = test.request.url.startsWith("/") ? test.request.url : `/${test.request.url}`;
     const headers = { ...group.http?.headers, ...test.request.headers };
     const body = test.request.body ? JSON.stringify(test.request.body, null, 2) : undefined;
 
@@ -637,7 +639,7 @@ export class TestEngine {
     }
 
     script += `\nfunction request()\n`;
-    script += `  return wrk.format("${test.request.method}", "${fullUrl}"${
+    script += `  return wrk.format("${test.request.method}", "${requestPath}"${
       headers ? ", wrk.headers" : ""
     }${body ? ", wrk.body" : ""})\n`;
     script += `end\n`;

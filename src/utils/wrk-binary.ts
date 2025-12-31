@@ -131,12 +131,15 @@ export async function validateWrkBinary(wrkPath: string): Promise<boolean> {
 
 /**
  * 获取 wrk 版本信息
+ * wrk 版本格式: "wrk a211dd5 [kqueue]" (git commit hash) 或 "wrk 4.2.0"
  */
 export async function getWrkVersion(wrkPath: string): Promise<string | undefined> {
   try {
     const { execSync } = await import("child_process");
-    const output = execSync(`"${wrkPath}" --help`, { encoding: "utf8" });
-    const match = output.match(/wrk\s+(\d+\.\d+\.\d+)/);
+    // 使用 -v 参数获取版本信息
+    const output = execSync(`"${wrkPath}" -v`, { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] });
+    // 匹配 "wrk <version>" 格式，支持语义版本和 git hash
+    const match = output.match(/wrk\s+([a-zA-Z0-9.]+)/);
     return match ? match[1] : undefined;
   } catch {
     return undefined;
