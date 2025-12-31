@@ -7,9 +7,15 @@
 import {
   runComparison,
   generateComparisonReport,
-  ServerConfig,
-  ComparisonTestConfig,
-} from "../src";
+  type ServerConfig,
+  type ComparisonTestConfig,
+} from "thunderbench";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+// 获取 servers 目录的绝对路径
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const serversDir = path.join(__dirname, "../servers");
 
 // ============================================================
 // 1. 定义要对比的框架服务器
@@ -19,8 +25,7 @@ const servers: ServerConfig[] = [
   {
     name: "Vafast",
     command: "bun",
-    args: ["run", "servers/vafast-server.ts"],
-    cwd: __dirname,
+    args: ["run", path.join(serversDir, "vafast-server.ts")],
     port: 3001,
     healthCheckPath: "/health",
     startupTimeout: 10000,
@@ -29,8 +34,7 @@ const servers: ServerConfig[] = [
   {
     name: "Express",
     command: "bun",
-    args: ["run", "servers/express-server.ts"],
-    cwd: __dirname,
+    args: ["run", path.join(serversDir, "express-server.ts")],
     port: 3002,
     healthCheckPath: "/health",
     startupTimeout: 10000,
@@ -39,8 +43,7 @@ const servers: ServerConfig[] = [
   {
     name: "Hono",
     command: "bun",
-    args: ["run", "servers/hono-server.ts"],
-    cwd: __dirname,
+    args: ["run", path.join(serversDir, "hono-server.ts")],
     port: 3003,
     healthCheckPath: "/health",
     startupTimeout: 10000,
@@ -49,8 +52,7 @@ const servers: ServerConfig[] = [
   {
     name: "Elysia",
     command: "bun",
-    args: ["run", "servers/elysia-server.ts"],
-    cwd: __dirname,
+    args: ["run", path.join(serversDir, "elysia-server.ts")],
     port: 3004,
     healthCheckPath: "/health",
     startupTimeout: 10000,
@@ -67,38 +69,33 @@ const testConfig: ComparisonTestConfig = {
   description: "对比 Vafast, Express, Hono, Elysia 的性能表现",
   threads: 4,
   connections: 100,
-  duration: 30, // 30 秒测试
+  duration: 30,
   warmupRequests: 1000,
   scenarios: [
-    // 场景 1: 简单 Hello World
     {
       name: "Hello World",
       method: "GET",
       path: "/",
       weight: 30,
     },
-    // 场景 2: JSON API
     {
       name: "JSON API",
       method: "GET",
       path: "/api/users",
       weight: 25,
     },
-    // 场景 3: 动态参数
     {
       name: "动态参数",
       method: "GET",
       path: "/api/users/123",
       weight: 20,
     },
-    // 场景 4: Query 参数
     {
       name: "Query 参数",
       method: "GET",
       path: "/api/search?q=test&page=1&limit=10",
       weight: 15,
     },
-    // 场景 5: POST JSON
     {
       name: "POST JSON",
       method: "POST",
@@ -119,17 +116,15 @@ const testConfig: ComparisonTestConfig = {
 // 3. 运行对比测试
 // ============================================================
 
-async function main() {
+async function main(): Promise<void> {
   console.log("🚀 开始框架对比测试...\n");
 
   try {
-    // 运行对比测试
     const result = await runComparison(servers, testConfig, {
       outputDir: "./comparison-reports",
       verbose: true,
     });
 
-    // 生成报告
     const reportFiles = await generateComparisonReport(result, {
       outputDir: "./comparison-reports",
       formats: ["markdown", "json"],
@@ -144,4 +139,3 @@ async function main() {
 }
 
 main();
-

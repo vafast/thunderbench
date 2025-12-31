@@ -1,4 +1,4 @@
-import { BenchmarkConfig } from "../src/types";
+import type { BenchmarkConfig } from "thunderbench";
 
 const config: BenchmarkConfig = {
   name: "复杂 wrk 测试演示",

@@ -1,4 +1,4 @@
-import { BenchmarkConfig } from "../src/types";
+import type { BenchmarkConfig } from "thunderbench";
 
 /**
  * 复杂的性能测试配置示例
