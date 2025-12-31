@@ -1,9 +1,9 @@
 /**
  * Vafast 测试服务器
- * 使用 Node.js 标准 API
+ * 使用 @vafast/node-server 优化适配器
  */
 
-import { createServer } from "node:http";
+import { serve } from "@vafast/node-server";
 import { Server } from "vafast";
 
 const PORT = parseInt(process.env.PORT || "3001");
@@ -74,43 +74,7 @@ const server = new Server([
   },
 ]);
 
-/**
- * 将 Web Response 转换为 Node.js 响应
- */
-async function handleRequest(
-  req: import("node:http").IncomingMessage,
-  res: import("node:http").ServerResponse
-) {
-  const protocol = "http";
-  const host = req.headers.host || `localhost:${PORT}`;
-  const url = `${protocol}://${host}${req.url}`;
-
-  const chunks: Buffer[] = [];
-  for await (const chunk of req) {
-    chunks.push(chunk);
-  }
-  const body = chunks.length > 0 ? Buffer.concat(chunks) : undefined;
-
-  const request = new Request(url, {
-    method: req.method,
-    headers: req.headers as Record<string, string>,
-    body: body && req.method !== "GET" && req.method !== "HEAD" ? body : undefined,
-  });
-
-  const response = await server.fetch(request);
-
-  res.statusCode = response.status;
-
-  response.headers.forEach((value, key) => {
-    res.setHeader(key, value);
-  });
-
-  const responseBody = await response.arrayBuffer();
-  res.end(Buffer.from(responseBody));
-}
-
-const httpServer = createServer(handleRequest);
-
-httpServer.listen(PORT, () => {
+// 使用优化的 Node.js 适配器
+serve({ fetch: server.fetch, port: PORT }, () => {
   console.log(`Vafast server running on http://localhost:${PORT}`);
 });

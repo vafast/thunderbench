@@ -150,6 +150,7 @@ Thumbs.db
 # Test reports
 reports/
 test-results/
+comparison-reports/
 
 # Bun
 bun.lockb
