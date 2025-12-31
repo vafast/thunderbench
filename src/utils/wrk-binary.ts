@@ -135,9 +135,10 @@ export async function validateWrkBinary(wrkPath: string): Promise<boolean> {
  */
 export async function getWrkVersion(wrkPath: string): Promise<string | undefined> {
   try {
-    const { execSync } = await import("child_process");
-    // 使用 -v 参数获取版本信息
-    const output = execSync(`"${wrkPath}" -v`, { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] });
+    const { spawnSync } = await import("child_process");
+    // 使用 -v 参数获取版本信息（wrk -v 退出码为 1，所以用 spawnSync 而不是 execSync）
+    const result = spawnSync(wrkPath, ["-v"], { encoding: "utf8" });
+    const output = result.stdout + result.stderr;
     // 匹配 "wrk <version>" 格式，支持语义版本和 git hash
     const match = output.match(/wrk\s+([a-zA-Z0-9.]+)/);
     return match ? match[1] : undefined;
