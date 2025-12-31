@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "generatedAt": "2025-12-31T10:15:32.946Z",
+    "tool": "ThunderBench",
+    "version": "1.0.0"
+  },
+  "summary": {
+    "name": "Web 框架性能对比测试",
+    "description": "对比 Vafast, Express, Hono, Elysia 的性能表现",
+    "startTime": 1767176012136,
+    "endTime": 1767176132943,
+    "duration": 120807,
+    "frameworksCount": 4
+  },
+  "testConfig": {
+    "name": "Web 框架性能对比测试",
+    "description": "对比 Vafast, Express, Hono, Elysia 的性能表现",
+    "threads": 4,
+    "connections": 100,
+    "duration": 30,
+    "warmupRequests": 1000,
+    "scenarios": [
+      {
+        "name": "Hello World",
+        "method": "GET",
+        "path": "/",
+        "weight": 30
+      },
+      {
+        "name": "JSON API",
+        "method": "GET",
+        "path": "/api/users",
+        "weight": 25
+      },
+      {
+        "name": "动态参数",
+        "method": "GET",
+        "path": "/api/users/123",
+        "weight": 20
+      },
+      {
+        "name": "Query 参数",
+        "method": "GET",
+        "path": "/api/search?q=test&page=1&limit=10",
+        "weight": 15
+      },
+      {
+        "name": "POST JSON",
+        "method": "POST",
+        "path": "/api/users",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "name": "Test User",
+          "email": "test@example.com"
+        },
+        "weight": 10
+      }
+    ]
+  },
+  "ranking": [
+    {
+      "rank": 1,
+      "name": "Elysia",
+      "rps": 121240.52,
+      "avgLatency": 1.07,
+      "p99Latency": 0,
+      "errorRate": 0,
+      "relativePerformance": 100
+    },
+    {
+      "rank": 2,
+      "name": "Hono",
+      "rps": 53165.47,
+      "avgLatency": 2.18,
+      "p99Latency": 0,
+      "errorRate": 0,
+      "relativePerformance": 44
+    },
+    {
+      "rank": 3,
+      "name": "Vafast",
+      "rps": 53143.21,
+      "avgLatency": 1.92,
+      "p99Latency": 0,
+      "errorRate": 0,
+      "relativePerformance": 44
+    },
+    {
+      "rank": 4,
+      "name": "Express",
+      "rps": 5869.62,
+      "avgLatency": 19.62,
+      "p99Latency": 0,
+      "errorRate": 0,
+      "relativePerformance": 5
+    }
+  ],
+  "frameworks": [
+    {
+      "name": "Vafast",
+      "port": 3001,
+      "summary": {
+        "totalRequests": 1595204,
+        "successfulRequests": 1595204,
+        "failedRequests": 0,
+        "requestsPerSecond": 53143.21,
+        "avgLatency": 1.92,
+        "p50Latency": 0,
+        "p95Latency": 20.43,
+        "p99Latency": 0,
+        "maxLatency": 0,
+        "errorRate": 0,
+        "transferTotal": 0
+      }
+    },
+    {
+      "name": "Express",
+      "port": 3002,
+      "summary": {
+        "totalRequests": 176406,
+        "successfulRequests": 176406,
+        "failedRequests": 0,
+        "requestsPerSecond": 5869.62,
+        "avgLatency": 19.62,
+        "p50Latency": 0,
+        "p95Latency": 321.04,
+        "p99Latency": 0,
+        "maxLatency": 0,
+        "errorRate": 0,
+        "transferTotal": 0
+      }
+    },
+    {
+      "name": "Hono",
+      "port": 3003,
+      "summary": {
+        "totalRequests": 1597194,
+        "successfulRequests": 1597194,
+        "failedRequests": 0,
+        "requestsPerSecond": 53165.47,
+        "avgLatency": 2.18,
+        "p50Latency": 0,
+        "p95Latency": 99.89,
+        "p99Latency": 0,
+        "maxLatency": 0,
+        "errorRate": 0,
+        "transferTotal": 0
+      }
+    },
+    {
+      "name": "Elysia",
+      "port": 3004,
+      "summary": {
+        "totalRequests": 3645226,
+        "successfulRequests": 3645226,
+        "failedRequests": 0,
+        "requestsPerSecond": 121240.52,
+        "avgLatency": 1.07,
+        "p50Latency": 0,
+        "p95Latency": 84.71,
+        "p99Latency": 0,
+        "maxLatency": 0,
+        "errorRate": 0,
+        "transferTotal": 0
+      }
+    }
+  ]
+}
