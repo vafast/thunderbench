@@ -70,8 +70,7 @@
     "express": "^5.2.1",
     "hono": "^4.11.3",
     "typescript": "^5.3.0",
-    "@vafast/node-server": "file:../packages/node-server",
-    "vafast": "file:../vafast",
+    "vafast": "^0.3.4",
     "vitest": "^1.0.0"
   }
 }
