@@ -21,12 +21,10 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "bun build src/index.ts --outdir ./dist --target bun && tsc --project tsconfig.build.json",
+    "build": "tsup && tsc --project tsconfig.build.json",
     "dev": "bun --watch src/index.ts",
     "test": "vitest --run",
-    "bench": "bun run examples/comparison/framework-comparison.ts",
-    "prepublishOnly": "npm run build",
-    "release": "bun run build && bun run test && bumpp && bun publish"
+    "release": "npx np"
   },
   "keywords": [
     "performance",
