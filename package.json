@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "build": "tsup && tsc --project tsconfig.build.json",
-    "dev": "bun --watch src/index.ts",
+    "dev": "npx tsx watch src/index.ts",
     "test": "vitest --run",
     "release": "npx np"
   },
