@@ -1,14 +1,14 @@
 {
   "name": "thunderbench",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "ThunderBench - 高性能API性能测试工具核心引擎",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     }
   },
   "files": [
