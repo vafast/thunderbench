@@ -28,20 +28,20 @@ examples/
 
 ```bash
 cd thunderbench
-bun run examples/configs/simple-config.ts
+npm run examples/configs/simple-config.ts
 ```
 
 ### 2. 运行框架对比测试
 
 ```bash
 # 先启动所有测试服务器（自动管理）
-bun run examples/comparison/framework-comparison.ts
+npm run examples/comparison/framework-comparison.ts
 ```
 
 ### 3. 编程使用
 
 ```bash
-bun run examples/usage/programmatic-usage.ts
+npm run examples/usage/programmatic-usage.ts
 ```
 
 ## 📝 配置示例
@@ -92,6 +92,6 @@ await generateComparisonReport(result);
 启动单个服务器：
 
 ```bash
-bun run examples/servers/vafast-server.ts
+npm run examples/servers/vafast-server.ts
 ```
 

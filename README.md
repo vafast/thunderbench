@@ -39,7 +39,7 @@ npm install thunderbench
 yarn add thunderbench
 
 # 使用 bun
-bun add thunderbench
+npm install thunderbench
 
 # 使用 pnpm
 pnpm add thunderbench
@@ -748,19 +748,19 @@ git clone https://github.com/thunderbench/thunderbench.git
 cd thunderbench
 
 # 安装依赖
-bun install
+npm install
 
 # 开发模式
-bun run dev
+npm run dev
 
 # 构建项目
-bun run build
+npm run build
 
 # 运行测试
-bun run test
+npm run test
 
 # 类型检查
-bun run type-check
+npm run type-check
 ```
 
 ### 项目结构
