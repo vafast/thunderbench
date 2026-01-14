@@ -3,7 +3,7 @@
  * 使用 Bun 原生 serve（最高性能）
  */
 
-import { Server } from "vafast";
+import { Server, defineRoute, defineRoutes } from "vafast";
 
 const PORT = parseInt(process.env.PORT || "3001");
 
@@ -12,66 +12,63 @@ const users = [
   { id: 2, name: "Bob", email: "bob@example.com" },
 ];
 
-// 使用简化的 handler，直接返回数据，让 mapResponse 自动处理
-const server = new Server([
+// 使用 defineRoutes 定义路由
+const routes = defineRoutes([
   // Hello World - 直接返回字符串
-  {
+  defineRoute({
     method: "GET",
     path: "/",
     handler: () => "Hello World",
-  },
+  }),
   // 健康检查
-  {
+  defineRoute({
     method: "GET",
     path: "/health",
     handler: () => "OK",
-  },
+  }),
   // JSON API - 直接返回对象
-  {
+  defineRoute({
     method: "GET",
     path: "/api/users",
     handler: () => users,
-  },
+  }),
   // 动态参数
-  {
+  defineRoute({
     method: "GET",
     path: "/api/users/:id",
-    handler: (req) => {
-      const params = (req as unknown as { params: { id: string } }).params;
+    handler: ({ params }) => {
       const user = users.find((u) => u.id === parseInt(params.id));
       return user || { error: "Not found" };
     },
-  },
+  }),
   // Query 参数
-  {
+  defineRoute({
     method: "GET",
     path: "/api/search",
-    handler: (req) => {
-      const url = new URL(req.url);
-      const q = url.searchParams.get("q");
-      const page = url.searchParams.get("page") || "1";
-      const limit = url.searchParams.get("limit") || "10";
+    handler: ({ query }) => {
+      const q = query.q || "";
+      const page = parseInt(query.page || "1");
+      const limit = parseInt(query.limit || "10");
 
       return {
         query: q,
-        page: parseInt(page),
-        limit: parseInt(limit),
+        page,
+        limit,
         results: users.filter((u) =>
-          u.name.toLowerCase().includes((q || "").toLowerCase()),
+          u.name.toLowerCase().includes(q.toLowerCase()),
         ),
       };
     },
-  },
+  }),
   // POST JSON
-  {
+  defineRoute({
     method: "POST",
     path: "/api/users",
-    handler: async (req) => {
-      const body = await req.json();
-      return { id: users.length + 1, ...body };
-    },
-  },
+    handler: ({ body }) => ({ id: users.length + 1, ...body }),
+  }),
 ]);
+
+const server = new Server(routes);
 
 // 使用 Bun 原生 serve（最高性能）
 export default {

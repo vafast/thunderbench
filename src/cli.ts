@@ -27,7 +27,7 @@ program
 
   .option("--cleanup-wrk", "测试完成后清理 wrk 脚本文件");
 
-program.parse();
+program.parse(process.argv);
 
 const options = program.opts();
 
